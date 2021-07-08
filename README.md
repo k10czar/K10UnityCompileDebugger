@@ -30,3 +30,29 @@ If you wish to disable the logs, you can set this in the checkbox in the utility
 ### Add as submodule on your Unity project repository
 
 ``git submodule add https://github.com/k10czar/UnityCompileDebugger.git "Assets/Plugins/UnityCompileDebugger"``
+
+## How To remove the submodule
+
+1.  Delete from the  _.gitmodules_  file:
+
+	`[submodule "Assets/Plugins/UnityCompileDebugger"]`
+	
+	`path = Assets/Plugins/UnityCompileDebugger`
+	
+	`url = https://github.com/k10czar/UnityCompileDebugger.git`
+	
+2.  Delete from  _.git/config_:
+
+	`[submodule "Assets/Plugins/UnityCompileDebugger"]`
+	
+	`url = https://github.com/k10czar/UnityCompileDebugger.git`
+	
+	`active = true`
+	
+3.  Run:
+
+	`git rm --cached "Assets/Plugins/UnityCompileDebugger"`
+
+4.  Commit the superproject.
+
+5.  Delete the submodule folder _`Assets/Plugins/UnityCompileDebugger`_.
