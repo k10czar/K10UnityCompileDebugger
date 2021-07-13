@@ -64,6 +64,6 @@ public class UnityCompilationDebug
 		if( !EditorPrefs.GetBool( LogEnabledPref, true ) ) return;
 
 		var totalTimeSeconds = report.compilationTotalTime + report.assemblyReloadTotalTime;
-		Debug.Log( $"Compilation Report: {totalTimeSeconds:F2}s\n\n\tCompilation: {report.compilationTotalTime:F2}s\n\tAssembly Reload: {report.assemblyReloadTotalTime:F2}s\n" );
+		Debug.Log( $"Compilation Report: {totalTimeSeconds:F2}s\n( Compilation: {report.compilationTotalTime:F2}s + Assembly Reload: {report.assemblyReloadTotalTime:F2}s )" );
 	}
 }
