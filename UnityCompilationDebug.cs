@@ -21,10 +21,11 @@ public class UnityCompilationDebug
 
 	private static double compilationTotalTime;
 
-	private static Color TOTAL_COLOR = Color.Lerp( Color.red, Color.yellow, .5f );
-	private static Color COMPILATION_COLOR = Color.yellow;
-	private static Color SIGN_COLOR = Color.Lerp( Color.red, Color.yellow, .75f );
-	private static Color RELOAD_COLOR = Color.Lerp( Color.red, Color.yellow, .15f );
+	private static string TOTAL_COLOR = "<color=#FFA500>";
+	private static string COMPILATION_COLOR = "<color=#D0FF14>";
+	private static string RELOAD_COLOR = "<color=#87CEFA>";
+	private static string SIGN_COLOR = "<color=#F0E68C>";
+	
 
 	static UnityCompilationDebug()
 	{
@@ -69,6 +70,7 @@ public class UnityCompilationDebug
 		if( !EditorPrefs.GetBool( LogEnabledPref, true ) ) return;
 
 		var totalTimeSeconds = report.compilationTotalTime + report.assemblyReloadTotalTime;
-		Debug.Log( $"📝 Compilation Report: <color=#{ColorUtility.ToHtmlStringRGB(TOTAL_COLOR)}>{totalTimeSeconds:F2}s</color> ⏳\n<color=#{ColorUtility.ToHtmlStringRGB(SIGN_COLOR)}>(</color> Compilation🛠: <color=#{ColorUtility.ToHtmlStringRGB(COMPILATION_COLOR)}>{report.compilationTotalTime:F2}s</color> <color=#{ColorUtility.ToHtmlStringRGB(SIGN_COLOR)}>+</color> Assembly Reload🔄: <color=#{ColorUtility.ToHtmlStringRGB(RELOAD_COLOR)}>{report.assemblyReloadTotalTime:F2}s</color> <color=#{ColorUtility.ToHtmlStringRGB(SIGN_COLOR)}>)</color>" );
+		Debug.Log( $"📝 Compilation Report: {TOTAL_COLOR}{totalTimeSeconds:F2}s</color> ⏳\n"+
+				$"{SIGN_COLOR}(</color> Compilation🛠: {COMPILATION_COLOR}{report.compilationTotalTime:F2}s</color> {SIGN_COLOR}+</color> Assembly Reload🔄: {RELOAD_COLOR}{report.assemblyReloadTotalTime:F2}s</color> {SIGN_COLOR})</color>" );
 	}
 }
