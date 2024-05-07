@@ -29,7 +29,7 @@ If you wish to disable the logs, you can set this in the checkbox in the utility
 
 ### Add as submodule on your Unity project repository
 
-``git submodule add https://github.com/k10czar/UnityCompileDebugger.git "Assets/Plugins/UnityCompileDebugger"``
+``git submodule add https://github.com/k10czar/UnityCompileDebugger.git "Assets/Plugins/K10/UnityCompileDebugger"``
 
 ## How To remove the submodule
 
