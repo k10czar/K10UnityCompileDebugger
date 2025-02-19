@@ -7,11 +7,14 @@ using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
 
-
 // Based on https://gist.github.com/karljj1/9c6cce803096b5cd4511cf0819ff517b
 [InitializeOnLoad]
 public class UnityCompilationDebug
 {
+	const string SFXS_FOLDER = "SFXs/";
+	const string compilationSuccessSfx = SFXS_FOLDER + "compileSuccess";
+	const string compilationFailSfx = SFXS_FOLDER + "compileFail";
+
 	internal const string PendingCompilationReportEditorPref = "PendingCompilationReportKey";
 	internal const string CompilationReportEditorPref = "CompilationReportKey";
 	internal const string LogEnabledPref = "AsmdefDebugLogKey";
@@ -72,5 +75,7 @@ public class UnityCompilationDebug
 		var totalTimeSeconds = report.compilationTotalTime + report.assemblyReloadTotalTime;
 		Debug.Log( $"📝 Compilation Report: {TOTAL_COLOR}{totalTimeSeconds:F2}s</color> ⏳\n"+
 				$"{SIGN_COLOR}(</color> Compilation🛠: {COMPILATION_COLOR}{report.compilationTotalTime:F2}s</color> {SIGN_COLOR}+</color> Assembly Reload🔄: {RELOAD_COLOR}{report.assemblyReloadTotalTime:F2}s</color> {SIGN_COLOR})</color>" );
+
+		EditorAudioUtils.PlayClip( compilationSuccessSfx );
 	}
 }
