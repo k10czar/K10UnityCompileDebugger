@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -12,6 +11,8 @@ namespace UnityCompilationDebugger
         private static string reportJson;
         private static CompilationReport report;
         private bool logEnabled;
+        private bool sfxEnabled;
+        private GUIStyle toogleStyle;
 
         [MenuItem("K10/Unity Compilation Debugger")]
         private static void Init()
@@ -39,6 +40,10 @@ namespace UnityCompilationDebugger
         private void OnEnable()
         {
             logEnabled = EditorPrefs.GetBool(UnityCompilationDebug.LogEnabledPref, true);
+            sfxEnabled = EditorPrefs.GetBool(UnityCompilationDebug.SfxEnabledPref, false);
+            toogleStyle = new GUIStyle( EditorStyles.textArea ) {
+
+            };
         }
 
         private void OnGUI()
@@ -55,7 +60,7 @@ namespace UnityCompilationDebugger
                 return;
             }
 
-            GUILayout.Label("Post Compilation Report", EditorStyles.boldLabel);
+            GUILayout.Label("Post Compilation Report", toogleStyle);
 
             var date = DateTime.FromBinary(report.reloadEventTimes);
             var totalTimeSeconds = report.compilationTotalTime + report.assemblyReloadTotalTime;
@@ -65,13 +70,26 @@ namespace UnityCompilationDebugger
 			EditorGUILayout.FloatField( "Compilation Time", (float)report.compilationTotalTime, EditorStyles.boldLabel );
 			EditorGUILayout.FloatField( "Assembly Reload Time", (float)report.assemblyReloadTotalTime, EditorStyles.boldLabel );
 
-            GUILayout.Label("Print compilation time after reload", EditorStyles.boldLabel);
-            var enableLog = EditorGUILayout.Toggle("Use Debug.Log", logEnabled);
+            EditorGUILayout.Space( 5 );
+
+            GUILayout.Label( "Print compilation time after reload", toogleStyle );
+            var enableLog = EditorGUILayout.ToggleLeft("Use Debug.Log", logEnabled);
+            
+            EditorGUILayout.Space( 5 );
+            
+            GUILayout.Label( "Play SFX after compilation over", toogleStyle );
+            var enableSfx = EditorGUILayout.ToggleLeft("Play SFX", logEnabled);
 
             if (logEnabled != enableLog)
             {
                 EditorPrefs.SetBool(UnityCompilationDebug.LogEnabledPref, enableLog);
                 logEnabled = enableLog;
+            }
+
+            if (sfxEnabled != enableSfx)
+            {
+                EditorPrefs.SetBool(UnityCompilationDebug.SfxEnabledPref, enableSfx);
+                sfxEnabled = enableSfx;
             }
         }
     }

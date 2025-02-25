@@ -18,6 +18,7 @@ public class UnityCompilationDebug
 	internal const string PendingCompilationReportEditorPref = "PendingCompilationReportKey";
 	internal const string CompilationReportEditorPref = "CompilationReportKey";
 	internal const string LogEnabledPref = "AsmdefDebugLogKey";
+	internal const string SfxEnabledPref = "AsmdefCompileSfxKey";
 
 	private static readonly CompilationReport CompilationReport = new CompilationReport();
 	private static readonly Dictionary<object, DateTime> StartTimes = new Dictionary<object, DateTime>();
@@ -69,13 +70,13 @@ public class UnityCompilationDebug
 		report.assemblyReloadTotalTime = ( DateTime.UtcNow - date ).TotalSeconds;
 
 		EditorPrefs.SetString( CompilationReportEditorPref, reportJson );
+		
+		if( EditorPrefs.GetBool( SfxEnabledPref, false ) ) EditorAudioUtils.PlayClip( compilationSuccessSfx );
 
 		if( !EditorPrefs.GetBool( LogEnabledPref, true ) ) return;
 
 		var totalTimeSeconds = report.compilationTotalTime + report.assemblyReloadTotalTime;
 		Debug.Log( $"📝 Compilation Report: {TOTAL_COLOR}{totalTimeSeconds:F2}s</color> ⏳\n"+
 				$"{SIGN_COLOR}(</color> Compilation🛠: {COMPILATION_COLOR}{report.compilationTotalTime:F2}s</color> {SIGN_COLOR}+</color> Assembly Reload🔄: {RELOAD_COLOR}{report.assemblyReloadTotalTime:F2}s</color> {SIGN_COLOR})</color>" );
-
-		EditorAudioUtils.PlayClip( compilationSuccessSfx );
 	}
 }
